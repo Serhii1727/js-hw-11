@@ -1,26 +1,35 @@
-import Notiflix from "notiflix";
+
 import refs from './refs';
-import { makeFetchPixabay } from '../js/api-services';
 
 
-function makeRenderMarkup(searchImage) {
-    makeFetchPixabay(searchImage).then(({ hits }) => {
-        if (hits.length === 0) {
-            Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-        }
+function makeRenderMarkup(hits) {
+    
         
-        const markup = hits.map(({ downloads, likes, views, comments, previewURL, largeImageURL }) => {
-            return `<img src=${previewURL} alt=${searchImage}>
-                    <ul>
-                        <li>Likes ${likes}</li>
-                        <li>Views ${views}</li>
-                        <li>Comments ${comments}</li>
-                        <li>Downloads ${downloads}</li>
-                    </ul>`
+        
+    const markup = hits.map(({ downloads, likes, views, comments, previewURL, tags, largeImageURL }) => {
+        const description = (`${tags}`).split(' ').join('-');
+        
+        return `<div class="photo-card">
+                    <img src=${previewURL} alt=${description} loading="lazy" />
+                    <div class="info">
+                        <p class="info-item">
+                            <b>Likes ${likes}</b>
+                        </p>
+                        <p class="info-item">
+                            <b>Views ${views}</b>
+                        </p>
+                        <p class="info-item">
+                            <b>Comments ${comments}</b>
+                         </p>
+                        <p class="info-item">
+                            <b>Downloads ${downloads}</b>
+                        </p>
+                    </div>
+                </div>`
         }).join('');
 
-        refs.divGallery.insertAdjacentHTML('beforeend', markup);
-    });
+    refs.divGallery.insertAdjacentHTML('beforeend', markup);
+    
 };
 
 export default makeRenderMarkup;
