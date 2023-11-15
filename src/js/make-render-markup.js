@@ -6,11 +6,11 @@ function makeRenderMarkup(hits) {
     
         
         
-    const markup = hits.map(({ downloads, likes, views, comments, previewURL, tags, largeImageURL }) => {
+    const markup = hits.map(({ downloads, likes, views, comments, webformatURL, tags, largeImageURL }) => {
         const description = (`${tags}`).split(' ').join('-');
         
         return `<div class="photo-card">
-                    <img src=${previewURL} alt=${description} loading="lazy" />
+                    <img src=${webformatURL} alt=${description} loading="lazy" />
                     <div class="info">
                         <p class="info-item">
                             <b>Likes ${likes}</b>
