@@ -15,14 +15,15 @@ refs.form.addEventListener('submit', (event) => {
     event.preventDefault();
     clearGallery();
     newApiService.resetPage();
+    newApiService.resetPerPage();
     newApiService.query = createSearchQuery();
     refs.buttonLoadMore.classList.add('is-hidden');
 
     
     newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
 
-        totalImage = totalHits;
-        console.log(totalImage)
+        newApiService.setTotal(totalHits);
+        console.log(newApiService);
         
         if (hits.length === 0) {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
@@ -45,11 +46,16 @@ refs.form.addEventListener('submit', (event) => {
 });
 
 refs.buttonLoadMore.addEventListener('click', () => {
+    newApiService.calcTotal()
+    newApiService.setPerPage(newApiService.total);
+    
+
     
     newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
         
         
-        if (hits.length < 40 || totalImage < 0) {
+        
+        if (hits.length < 40 || newApiService.total < 0) {
             refs.buttonLoadMore.classList.add('is-hidden');
             makeRenderMarkup(hits);
             showMessage();
@@ -57,9 +63,9 @@ refs.buttonLoadMore.addEventListener('click', () => {
         else {
             makeRenderMarkup(hits);
             newApiService.incrementPage();
-            totalImage -= 40;
+            //newApiService.calcTotal()
         }
-
+        console.log(newApiService)
         
     });
 });
