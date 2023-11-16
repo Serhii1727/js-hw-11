@@ -7,9 +7,7 @@ import clearGallery from "./js/clear-gallery";
 import NewApiService from "./js/api-services";
 import showMessage from "./js/show-message";
 
-
 const newApiService = new NewApiService();
-let totalImage = null;
 
 refs.form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -19,11 +17,9 @@ refs.form.addEventListener('submit', (event) => {
     newApiService.query = createSearchQuery();
     refs.buttonLoadMore.classList.add('is-hidden');
 
-    
     newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
 
         newApiService.setTotal(totalHits);
-        console.log(newApiService);
         
         if (hits.length === 0) {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
@@ -37,7 +33,8 @@ refs.form.addEventListener('submit', (event) => {
             refs.buttonLoadMore.classList.add('is-hidden');
             return;
         };
-
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        
         makeRenderMarkup(hits);
         newApiService.incrementPage();
         refs.buttonLoadMore.classList.remove('is-hidden');
@@ -49,11 +46,7 @@ refs.buttonLoadMore.addEventListener('click', () => {
     newApiService.calcTotal()
     newApiService.setPerPage(newApiService.total);
     
-
-    
-    newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
-        
-        
+    newApiService.makeFetchPixabay().then(({ hits }) => {
         
         if (hits.length < 40 || newApiService.total < 0) {
             refs.buttonLoadMore.classList.add('is-hidden');
@@ -63,9 +56,7 @@ refs.buttonLoadMore.addEventListener('click', () => {
         else {
             makeRenderMarkup(hits);
             newApiService.incrementPage();
-            //newApiService.calcTotal()
+            
         }
-        console.log(newApiService)
-        
     });
 });
