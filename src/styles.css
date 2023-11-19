@@ -76,6 +76,7 @@ img {
     border-radius: 25px;
     background-color: rgb(86, 86, 233);
     border: none;
+    cursor: pointer;
 }
 
 .load-more-text {
