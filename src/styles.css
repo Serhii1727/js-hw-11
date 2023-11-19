@@ -60,10 +60,28 @@ img {
     font-weight: 400;
 }
 
-.is-hidden {
-    display: none;
-}
+
 
 .message {
     text-align: center;
+}
+
+.load-more {
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 150px;
+    height: 30px;
+    border-radius: 25px;
+    background-color: rgb(86, 86, 233);
+    border: none;
+}
+
+.load-more-text {
+    color: aliceblue;
+}
+
+.is-hidden {
+    display: none;
 }

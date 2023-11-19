@@ -1,16 +1,11 @@
-
 import refs from './refs';
-
 
 function makeRenderMarkup(hits) {
     
-        
-        
     const markup = hits.map(({ downloads, likes, views, comments, webformatURL, tags, largeImageURL }) => {
-        const description = (`${tags}`).split(' ').join('-');
-        
+
         return `<div class="photo-card">
-                    <img src=${webformatURL} alt=${description} loading="lazy"/>
+                    <a href='${largeImageURL}'><img src=${webformatURL} alt="${tags}" loading="lazy"/></a>
                     <div class="info">
                         <p class="info-item">
                             <b>Likes </b>
@@ -33,7 +28,6 @@ function makeRenderMarkup(hits) {
         }).join('');
 
     refs.divGallery.insertAdjacentHTML('beforeend', markup);
-    
 };
 
 export default makeRenderMarkup;

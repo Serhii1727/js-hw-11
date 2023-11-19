@@ -6,6 +6,7 @@ import createSearchQuery from "./js/create-search";
 import clearGallery from "./js/clear-gallery";
 import NewApiService from "./js/api-services";
 import showMessage from "./js/show-message";
+import addSimpleLightbox from "./js/simpleLightbox";
 
 const newApiService = new NewApiService();
 
@@ -25,7 +26,7 @@ refs.form.addEventListener('submit', (event) => {
     newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
 
         newApiService.setTotal(totalHits);
-        
+
         if (hits.length === 0) {
             Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             refs.buttonLoadMore.classList.add('is-hidden');
@@ -35,6 +36,7 @@ refs.form.addEventListener('submit', (event) => {
         if (totalHits <= 40) {
             Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
             makeRenderMarkup(hits);
+            addSimpleLightbox();
             showMessage();
             refs.buttonLoadMore.classList.add('is-hidden');
             return;
@@ -42,9 +44,10 @@ refs.form.addEventListener('submit', (event) => {
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
         
         makeRenderMarkup(hits);
+        addSimpleLightbox()
         newApiService.incrementPage();
         refs.buttonLoadMore.classList.remove('is-hidden');
-        
+
     })
 });
 
@@ -57,10 +60,12 @@ refs.buttonLoadMore.addEventListener('click', () => {
         if (hits.length < 40 || newApiService.total < 0) {
             refs.buttonLoadMore.classList.add('is-hidden');
             makeRenderMarkup(hits);
+            addSimpleLightbox();
             showMessage();
         }
         else {
             makeRenderMarkup(hits);
+            addSimpleLightbox();
             newApiService.incrementPage();
             
         }
