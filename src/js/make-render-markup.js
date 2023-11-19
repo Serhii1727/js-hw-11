@@ -10,19 +10,23 @@ function makeRenderMarkup(hits) {
         const description = (`${tags}`).split(' ').join('-');
         
         return `<div class="photo-card">
-                    <img src=${webformatURL} alt=${description} loading="lazy" />
+                    <img src=${webformatURL} alt=${description} loading="lazy"/>
                     <div class="info">
                         <p class="info-item">
-                            <b>Likes ${likes}</b>
+                            <b>Likes </b>
+                            <b class='info-item-text'>${likes}</b>
                         </p>
                         <p class="info-item">
-                            <b>Views ${views}</b>
+                            <b>Views </b>
+                            <b class='info-item-text'>${views}</b>
                         </p>
                         <p class="info-item">
-                            <b>Comments ${comments}</b>
+                            <b>Comments </b>
+                            <b class='info-item-text'>${comments}</b>
                          </p>
                         <p class="info-item">
-                            <b>Downloads ${downloads}</b>
+                            <b>Downloads </b>
+                            <b class='info-item-text'>${downloads}</b>
                         </p>
                     </div>
                 </div>`

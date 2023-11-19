@@ -17,6 +17,11 @@ refs.form.addEventListener('submit', (event) => {
     newApiService.query = createSearchQuery();
     refs.buttonLoadMore.classList.add('is-hidden');
 
+    if(event.target.elements.searchQuery.value === '') {
+        Notiflix.Notify.warning('Please enter a search query');
+        return;
+    }
+
     newApiService.makeFetchPixabay().then(({ totalHits, hits }) => {
 
         newApiService.setTotal(totalHits);
@@ -28,6 +33,7 @@ refs.form.addEventListener('submit', (event) => {
         };
 
         if (totalHits <= 40) {
+            Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
             makeRenderMarkup(hits);
             showMessage();
             refs.buttonLoadMore.classList.add('is-hidden');
