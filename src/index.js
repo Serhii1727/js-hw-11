@@ -6,7 +6,8 @@ import createSearchQuery from "./js/create-search";
 import clearGallery from "./js/clear-gallery";
 import NewApiService from "./js/api-services";
 import showMessage from "./js/show-message";
-import addSimpleLightbox from "./js/simpleLightbox";
+import addSimpleLightbox from './js/simple-lightbox';
+import makeScroll from "./js/make-scroll";
 
 const newApiService = new NewApiService();
 
@@ -36,6 +37,7 @@ refs.form.addEventListener('submit', (event) => {
         if (totalHits <= 40) {
             Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
             makeRenderMarkup(hits);
+            makeScroll(1 / 4);
             addSimpleLightbox();
             showMessage();
             refs.buttonLoadMore.classList.add('is-hidden');
@@ -44,7 +46,8 @@ refs.form.addEventListener('submit', (event) => {
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
         
         makeRenderMarkup(hits);
-        addSimpleLightbox()
+        makeScroll(1 / 4);
+        addSimpleLightbox();
         newApiService.incrementPage();
         refs.buttonLoadMore.classList.remove('is-hidden');
 
@@ -56,17 +59,21 @@ refs.buttonLoadMore.addEventListener('click', () => {
     newApiService.setPerPage(newApiService.total);
     
     newApiService.makeFetchPixabay().then(({ hits }) => {
+
         
         if (hits.length < 40 || newApiService.total < 0) {
             refs.buttonLoadMore.classList.add('is-hidden');
             makeRenderMarkup(hits);
+            makeScroll(2.26);
             addSimpleLightbox();
             showMessage();
         }
         else {
             makeRenderMarkup(hits);
+            makeScroll(2.26);
             addSimpleLightbox();
             newApiService.incrementPage();
+            
             
         }
     });
