@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class NewApiService {
     constructor() {
         this.searchImage = ''
@@ -9,7 +11,7 @@ class NewApiService {
     makeFetchPixabay() {
     const KEY_PIXABAY = "25836176-b4d66cb7105f8e07a6b55e563";
     const BASE_URL = 'https://pixabay.com/api/';
-    return fetch(`${BASE_URL}?key=${KEY_PIXABAY}&q=${this.searchImage}&image_type=photo&orientation="horizontal"&safesearch=true&page=${this.page}&per_page=${this.perPage}`).then((response) => {return response.json()})
+    return axios.get(`${BASE_URL}?key=${KEY_PIXABAY}&q=${this.searchImage}&image_type=photo&orientation="horizontal"&safesearch=true&page=${this.page}&per_page=${this.perPage}`).then((response) => {return response.data})
 };
     get query() {
         return this.query;
